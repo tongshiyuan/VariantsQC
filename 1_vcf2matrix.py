@@ -5,7 +5,7 @@ import datetime
 import argparse
 import pandas as pd
 
-# A use friendly tool for variants quality control with vcf format.
+
 def get_args():
     args_dict = {}
     description = 'from vcf to annotated matrix.'
