@@ -37,7 +37,7 @@ def get_args():
         args_dict['outfile'] = args.annofile
     else:
         args_dict['outfile'] = 'result.matrix'
-        print('Warn: Result will be output as < result.avinput >.')
+        print('Warn: Result will be output as < result.matrix >.')
     args_dict['tmp'] = args.tmp
     if os.path.exists(args_dict['tmp']):
         args_dict['tmp'] = args_dict['tmp'].rstrip('/') + '_tmp4v2a' + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
