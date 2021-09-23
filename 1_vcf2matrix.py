@@ -236,7 +236,7 @@ def anno_reference(outdir, ref, tmp_dir, script, para, num):
     print('Log: Get reference done.')
 
 
-def pre_deal(outdir, outfile):
+def feature_predeal(outdir, outfile):
     file = outdir + '/varAnnoMatrix.tsv'
     df = pd.read_table(file, low_memory=False)
     df['varLen'] = df.apply(lambda x: max(len(x['Ref']), len(x['Alt'])), axis=1)
@@ -245,6 +245,26 @@ def pre_deal(outdir, outfile):
     # df.index = pd.RangeIndex(len(df.index))
     dfMerge = pd.concat([df, df_vtype], axis=1)
     dfMerge.to_csv(outfile, sep='\t', index=False)
+    # rmsk & cpgIslandExt
+    for col in ['rmsk', 'cpgIslandExt']:
+        my_col = list(dfMerge[col])
+        for index, i in enumerate(my_col):
+            i = i.strip('.')
+            if i:
+                my_col[index] = 1
+            else:
+                my_col[index] = 0
+        dfMerge[col] = my_col
+    # genomicSuperDups
+    my_col = list(dfMerge['genomicSuperDups'])
+    for index, i in enumerate(my_col):
+        i = i.strip('.')
+        if i:
+            my_col[index] = eval(i.split(';')[0].split('Score=')[1])  # Score=0.993729;Name=chr9:10843
+        else:
+            my_col[index] = 0
+    dfMerge['genomicSuperDups'] = my_col
+    dfMerge.to_feather(outfile)
 
 
 def remove_tmp(tmp_dir, remain):
@@ -265,7 +285,7 @@ def main():
     script = os.path.split(os.path.realpath(__file__))[0] + '/bin'
     annotation(args['tmp'], script, args['refTag'], args['humandb'], args['thread'])
     anno_reference(args['tmp'], args['reference'], args['tmp'], script, args['job'], args['lines'])
-    pre_deal(args['tmp'], args['outfile'])
+    feature_predeal(args['tmp'], args['outfile'])
     remove_tmp(args['tmp'], args['reserved'])
     print('Log: Finish!')
 
