@@ -75,9 +75,9 @@ def vcf2matrix(file, outidr):
         sys.exit('Error: Can not identify the format of < %s > .' % file)
     # 输出表头
     var_matrix = open(matrix, 'w')
-    col_h = ['#CHROM', 'POS', 'ID', 'REF', 'ALT', 'QUAL', 'FILTER', 'INFO', 'FORMAT', 'Sample',
+    col_h = ['#CHROM', 'POS', 'ID', 'REF', 'ALT', 'QUAL', 'FILTER', 'INFO', 'FORMAT', 'Sample',  # 10个
              'AC', 'AF', 'AN', 'BaseQRankSum', 'ExcessHet', 'FS', 'MLEAC', 'MLEAF', 'MQ', 'QD', 'SOR', 'MQRankSum',
-             'ReadPosRankSum', 'DP_1',
+             'ReadPosRankSum', 'DP_1',  # 23个
              'GT', 'AD', 'DP', 'GQ', 'PL0', 'PL1', 'PL2',
              'start_expend', 'end_expend']
     col = ['NA'] * col_h.__len__()
@@ -108,7 +108,17 @@ def vcf2matrix(file, outidr):
             format_dcit = {}
             for i in ['GT', 'AD', 'DP', 'GQ', 'PL']:
                 format_dcit[i] = var_info_list[9].split(':')[format_.index(i)]
-            for i in range(24, 28):
+            # gt
+            if format_dcit['GT'] in ['0/1', '0|1']:
+                col[24] = '0/1'
+            elif format_dcit['GT'] in ['1/1', '1|1']:
+                col[24] = '1/1'
+            elif format_dcit['GT'] in ['1/0', '1|0']:
+                col[24] = '1/0'
+            else:
+                col[24] = format_dcit['GT']
+            #
+            for i in range(25, 28):
                 col[i] = format_dcit.get(col_h[i], 'NA')
             col[28] = format_dcit['PL'].split(',')[0]
             col[29] = format_dcit['PL'].split(',')[1]
