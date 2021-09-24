@@ -197,7 +197,7 @@ def anno_reference(outdir, ref, tmp_dir, script, para, num):
     seq_matrix = outdir + '/varAnnoMatrix.tsv'
     # cut region
     region_file = tmp_dir + '/region.tsv'
-    cut_cmd = 'cut -f 1,43,44 %s | tail -n+2 > %s' % (file, region_file)
+    cut_cmd = 'cut -f 1,45,46 %s | tail -n+2 > %s' % (file, region_file)
     cut_log = os.system(cut_cmd)
     if cut_log:
         sys.exit('Error: Something wrong with get reference region.')
