@@ -90,7 +90,7 @@ def vcf2matrix(file, outidr):
         else:
             var_info_list = var.decode().strip().split('\t')
             # 去除多等位位点
-            if var_info_list[4].find(','):
+            if var_info_list[4].find(',') != -1:
                 continue
             # 去除 chr，保留 vcf 前8列
             col[0] = var_info_list[0].lstrip('chr')
