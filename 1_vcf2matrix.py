@@ -281,16 +281,16 @@ def feature_predeal(outdir, outfile):
     df2.loc[(df2['GT'].isin(['1/1', '1|1'])), 'Hom'] = 1
     df2[['Het', 'Hom', 'BaseQRankSum', 'MQRankSum', 'ReadPosRankSum']] = df2[
         ['Het', 'Hom', 'BaseQRankSum', 'MQRankSum', 'ReadPosRankSum']].fillna(0)
-    df2['Log_QUAL'] = np.log10(df2['QUAL'])
+    df2['QUAL_norm'] = df2['QUAL'] / 360000
     df2['FS_norm'] = df2['FS'] / 1000
     df2['MQ_norm'] = df2['MQ'] / 60
     df2['QD_norm'] = df2['QD'] / 50
     df2['SOR_norm'] = df2['SOR'] / 15
     df2['DP_rate'] = df2.apply(lambda x: x['DP'] / x['DP_1'], axis=1)
     df2['GQ_norm'] = df2['GQ'] / 100
-    df2['Log_PL0'] = np.log10(df2['PL0'])
-    df2['Log_PL1'] = np.log10(df2['PL1'])
-    df2['Log_PL2'] = np.log10(df2['PL2'])
+    df2['PL0_norm'] = df2['PL0'] / 360000
+    df2['PL1_norm'] = df2['PL1'] / 360000
+    df2['PL2_norm'] = df2['PL2'] / 360000
     df2['varLen_norm'] = df2['varLen'] / 1000
     df2['BaseQRankSum_norm'] = df2['BaseQRankSum'] / 30
     df2['MQRankSum_norm'] = df2['MQRankSum'] / 60
