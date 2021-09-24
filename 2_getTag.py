@@ -39,4 +39,4 @@ df2 = pd.merge(df, dfTg, how='left', on=['#CHROM', 'POS', 'REF', 'ALT', "GT"])
 df2['tag'].fillna(0, inplace=True)
 df2['tag'] = df2['tag'].astype(int)
 
-df2.to_feather(vcf + '_withTag.feather')
+df2.to_feather(file + '_withTag.feather')
