@@ -134,6 +134,7 @@ def vcf2matrix(file, outidr):
     #         break
     vh.close()
     var_matrix.close()
+    vcf.close()
     print('Log: Get raw matrix done.')
 
 
@@ -254,7 +255,7 @@ def feature_predeal(outdir, outfile):
     # df_vtype.index = pd.RangeIndex(len(df_vtype.index))
     # df.index = pd.RangeIndex(len(df.index))
     dfMerge = pd.concat([df, df_vtype], axis=1)
-    dfMerge.to_csv(outfile, sep='\t', index=False)
+    # dfMerge.to_csv(outfile, sep='\t', index=False)
     # rmsk & cpgIslandExt
     for col in ['rmsk', 'cpgIslandExt']:
         my_col = list(dfMerge[col])
