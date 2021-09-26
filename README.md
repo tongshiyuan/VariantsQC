@@ -8,7 +8,7 @@ generate by [GATK 4.x](https://gatk.broadinstitute.org/hc/en-us).
 - please add [ANNOVAR](https://annovar.openbioinformatics.org/en/latest/) script to `bin` directory
   include:`annotate_variation.pl`, `coding_change.pl`, `convert2annovar.pl`, `table_annovar.pl`
 - python3.x
-- python package: pandas，feather-format, numpy ,tenserflow 2.x
+- python package: pandas，feather-format, numpy ,tenserflow 2.x, tqdm
 - samtools (set `samtools` as executable command)
 
 ## quickly start
