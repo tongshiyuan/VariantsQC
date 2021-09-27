@@ -11,6 +11,8 @@ num = 0
 for line in vcf:
     if line.decode().startswith('##'):
         num += 1
+    elif line.decode().startswith('#'):
+        sample_name = line.decode().split('\t')[9]
     else:
         break
 vcf.close()
@@ -20,7 +22,7 @@ dfHC = pd.read_table(norm_hc, compression='gzip', skiprows=num)
 
 _tmp_chr = list(dfHC['#CHROM'])
 dfHC['#CHROM'] = [_.lstrip('chr') for _ in _tmp_chr]
-_tmp_gt = list(dfHC['HG001'])
+_tmp_gt = list(dfHC[sample_name])
 for n, _gt in enumerate(_tmp_gt):
     gt = _gt.split(':', 1)[0]
     if gt in ['0/1', '0|1']:
