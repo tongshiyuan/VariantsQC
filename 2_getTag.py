@@ -12,7 +12,7 @@ for line in vcf:
     if line.decode().startswith('##'):
         num += 1
     elif line.decode().startswith('#'):
-        sample_name = line.decode().split('\t')[9]
+        sample_name = line.decode().strip().split('\t')[9]
     else:
         break
 vcf.close()
