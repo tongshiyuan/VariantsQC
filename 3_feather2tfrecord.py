@@ -39,7 +39,10 @@ file = sys.argv[1]
 out_tfrecode = sys.argv[2]
 w = 501
 writer = tf.io.TFRecordWriter(out_tfrecode)
-df = pd.read_feather(file)
+if file.endswith('feather'):
+    df = pd.read_feather(file)
+else:
+    df = pd.read_table(file, low_memory=False)
 col_list = df.columns.to_list()
 seq_idx = col_list.index('Sequence') + 1
 tag_idx = col_list.index('tag') + 1
