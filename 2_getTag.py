@@ -7,6 +7,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('-i', '--infile', help='input file.')
 parser.add_argument('-c', '--hc', help='high confident vcf of giab with bcftool norm.')
 parser.add_argument('--xc', action="store_true", help='Whether to include X chromosome.')
+parser.add_argument('--filter', action="store_true", help='Whether to filter with PASS.')
 args = parser.parse_args()
 file = args.infile
 norm_hc = args.hc
@@ -53,7 +54,8 @@ if file.endswith('vcf.gz'):
         else:
             gt_list.append(gt)
     df['GT'] = gt_list
-    df = df[df['FILTER'] == 'PASS']
+    if args.filter:
+        df = df[df['FILTER'] == 'PASS']
 else:
     df = pd.read_feather(file)
 df = df[df['#CHROM'].isin(cl)]
