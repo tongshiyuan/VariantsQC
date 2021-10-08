@@ -53,6 +53,7 @@ if file.endswith('vcf.gz'):
         else:
             gt_list.append(gt)
     df['GT'] = gt_list
+    df = df[df['FILTER'] == 'PASS']
 else:
     df = pd.read_feather(file)
 df = df[df['#CHROM'].isin(cl)]
